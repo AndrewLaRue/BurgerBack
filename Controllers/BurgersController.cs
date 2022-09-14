@@ -19,6 +19,22 @@ namespace BurgerBack.Controllers
       _burgersService = burgersService;
     }
 
+    // SECTION create
+    [HttpPost]
+    public ActionResult<Burger> CreateBurger([FromBody] Burger body)
+    {
+      try
+      {
+        Burger burger = _burgersService.CreateBurger(body);
+        return Ok(burger);
+      }
+      catch (Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
+
+    // SECTION get all
     [HttpGet]
     public ActionResult<List<Burger>> GetBurgers()
     {
@@ -33,8 +49,51 @@ namespace BurgerBack.Controllers
       }
     }
 
+    // SECTION get by id
+    [HttpGet("{id}")]
+    public ActionResult<Burger> GetBurgerById(int id)
+    {
+      try
+      {
+        Burger burger = _burgersService.GetBurgerById(id);
+        return Ok(burger);
+      }
+      catch (Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
 
+    // SECTION update(edit)
+    [HttpPut("{id}")]
+    public ActionResult<Burger> UpdateBurger([FromBody] Burger body, int id)
+    {
+      try
+      {
+        body.Id = id;
+        Burger burger = _burgersService.UpdatedBurger(body);
+        return Ok(burger);
+      }
+      catch (Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
 
+    // SECTION delete
+    [HttpDelete("{id}")]
+    public ActionResult<string> DeleteBurger(int id)
+    {
+      try
+      {
+        string message = _burgersService.DeleteBurger(id);
+        return Ok(message);
+      }
+      catch (Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
 
 
   }
